@@ -1,0 +1,3014 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LogstorOEEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="D_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="Localization" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServerName" Type="nvarchar" MaxLength="40" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Downtime_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="TCC_Id" Type="bigint" />
+          <Property Name="TCD_Id" Type="bigint" />
+          <Property Name="PUT_Id" Type="int" Nullable="false" />
+          <Property Name="PUTC_Id" Type="int" Nullable="false" />
+          <Property Name="TL_Id" Type="int" />
+          <Property Name="SH_Id" Type="int" />
+          <Property Name="DowntimeValue" Type="bigint" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="IsPlanned" Type="bit" />
+          <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsSynch" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.Downtime_History_Synch_Help' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Downtime_History_Synch_Help">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Local_Id" />
+            <PropertyRef Name="Station" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Local_Id" Type="bigint" Nullable="false" />
+          <Property Name="Error_Id" Type="int" />
+          <Property Name="Station" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Downtime_Shift_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="DH_Id" Type="bigint" />
+          <Property Name="SH_Id" Type="bigint" />
+          <Property Name="PUS_Id" Type="int" />
+          <Property Name="C_Id" Type="int" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="IsPlanned" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsSynch" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.Errors_old' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Errors_old">
+          <Key>
+            <PropertyRef Name="Error_Id" />
+          </Key>
+          <Property Name="Error_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="ErrorNumber" Type="int" />
+          <Property Name="ErrorState" Type="int" />
+          <Property Name="ErrorSeverity" Type="int" />
+          <Property Name="ErrorLine" Type="int" />
+          <Property Name="ErrorProcedure" Type="varchar(max)" />
+          <Property Name="ErrorMessage" Type="varchar(max)" />
+          <Property Name="ErrorDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="IsNational" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="iFIX_Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomKPIEgu" Type="nvarchar" MaxLength="25" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calc_Type_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WD_Id" Type="int" Nullable="false" />
+          <Property Name="KPICT_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calculation_Period">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="RefreshRate" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calculation_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="PUKPI_Id" Type="int" Nullable="false" />
+          <Property Name="SH_Id" Type="bigint" />
+          <Property Name="PCH_Id" Type="bigint" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="IsRecalc" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_PU_Current_Summary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="KPI_Id" Type="int" Nullable="false" />
+          <Property Name="PUKPICT_Id" Type="int" Nullable="false" />
+          <Property Name="KPICP_Id" Type="int" Nullable="false" />
+          <Property Name="KPICT_Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="EndTimePlanned" Type="datetime" />
+          <Property Name="Value" Type="real" />
+          <Property Name="IsRecalc" Type="bit" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lang_Defaults_old">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KEY_Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Default_Text" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lang_Text_old">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KEY_Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NLS" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_KPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="KPI_Id" Type="int" Nullable="false" />
+          <Property Name="KPIEgu" Type="nvarchar" MaxLength="25" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_KPI_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUKPI_Id" Type="int" Nullable="false" />
+          <Property Name="KPICT_Id" Type="int" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Shift">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="S_Id" Type="int" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Tree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="RT_Id" Type="int" Nullable="false" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Tree_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUT_Id" Type="int" Nullable="false" />
+          <Property Name="TCC_Id" Type="bigint" Nullable="false" />
+          <Property Name="CrossRefValue" Type="int" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+          <Property Name="IsPlanned" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Production_Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="PUT_Id" Type="int" Nullable="false" />
+          <Property Name="D_Id" Type="int" Nullable="false" />
+          <Property Name="A_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Production_Unit_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reason">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomCrossRefValue" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reason_Tree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MTL_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomStartTime" Type="datetime" Nullable="false" />
+          <Property Name="NomEndTime" Type="datetime" Nullable="false" />
+          <Property Name="NomValue" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_Excluded_Interval_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="PUS_Id" Type="int" Nullable="false" />
+          <Property Name="SH_Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_Excluded_Interval_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="PUS_Id" Type="int" Nullable="false" />
+          <Property Name="SEIT_Id" Type="int" Nullable="false" />
+          <Property Name="WD_Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="IsHoliday" Type="bit" Nullable="false" />
+          <Property Name="IsRecalc" Type="bit" />
+          <Property Name="IsSynch" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Cause_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RT_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NamePL" Type="nvarchar" MaxLength="40" />
+          <Property Name="DescriptionPL" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomCrossRefValue" Type="int" />
+          <Property Name="NomIsPlanned" Type="bit" Nullable="false" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Cause_Dependence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MTCD_Id" Type="bigint" />
+          <Property Name="RT_Id" Type="int" Nullable="false" />
+          <Property Name="TCC_Id" Type="bigint" Nullable="false" />
+          <Property Name="TL_Id" Type="int" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="TT_Id" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users_Security">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Validation_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="SLH_Id" Type="int" />
+          <Property Name="PCH_Id" Type="int" />
+          <Property Name="SH_Id" Type="int" />
+          <Property Name="PCSH_Id" Type="int" />
+          <Property Name="O_Id" Type="int" />
+          <Property Name="OH_Id" Type="int" />
+          <Property Name="DH_Id" Type="int" />
+          <Property Name="DPH_Id" Type="int" />
+          <Property Name="DSH_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Waste_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="PUP_Id" Type="int" />
+          <Property Name="PUS_Id" Type="int" />
+          <Property Name="PUW_Id" Type="int" />
+          <Property Name="C_Id" Type="int" />
+          <Property Name="PCH_Id" Type="int" />
+          <Property Name="SH_Id" Type="int" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="isConfirmed" Type="bit" Nullable="false" />
+          <Property Name="isDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Week_Day">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="Name_PL" Type="nvarchar" MaxLength="40" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewDowntimeLevel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewDowntimeLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewDowntimeReasonTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewDowntimeReasonTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MTL_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MTL_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewKPI' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewKPI">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomKPIEgu" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewKPIHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewKPIHistory">
+          <Key>
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="SH_Id" Type="bigint" />
+          <Property Name="PCH_Id" Type="bigint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="KPIegu" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewProductionUnitTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProductionUnitTags">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="TagName" />
+            <PropertyRef Name="UnitName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="TagName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="TagDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="UnitDesc" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewProdUnitDowntTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProdUnitDowntTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="RT_Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="RT_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewProdUnitKPI' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProdUnitKPI">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="KPI_Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="KPI_Id" Type="int" Nullable="false" />
+          <Property Name="KPIEgu" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewProdUnitShift' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProdUnitShift">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="S_Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="S_Id" Type="int" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="EndTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewProdUnitShiftManagement' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProdUnitShiftManagement">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="S_Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="S_Id" Type="int" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="EndTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewReasons' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewReasons">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomCrossRefValue" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewReasonTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewReasonTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MTL_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MTL_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewShift' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewShift">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="NomValue" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="NomStartTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="NomEndTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="NomValue" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewShiftOnProdUnit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewShiftOnProdUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LogstorOEE.SOEE.ViewTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewTags">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PU_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Function Name="fn_Local_SplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="String" Type="nvarchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="nchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="bigint" />
+                <Property Name="Data" Type="nvarchar" MaxLength="4000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_Local_AutoFillSH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="DaysAhead" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_CalcTimeToShiftEnd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="Timeleft" Type="int" Mode="InOut" />
+          <Parameter Name="Now" Type="datetime" Mode="In" />
+          <Parameter Name="Tag" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_CalculateKpis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Tag_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductCount" Type="int" Mode="In" />
+          <Parameter Name="CurrentProduct" Type="bit" Mode="In" />
+          <Parameter Name="CurrentShift" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_CalculateKpisWithIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="ProductCount" Type="int" Mode="In" />
+          <Parameter Name="TimeStamp" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_Create_Holiday_Config" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE" />
+        <Function Name="sp_Local_Create_Initial_Config" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE" />
+        <Function Name="sp_Local_FindShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="SH_Id" Type="int" Mode="InOut" />
+          <Parameter Name="Time" Type="datetime" Mode="In" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsertCurrentShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Local_InsertNewShiftToSH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="TagName" Type="nvarchar" Mode="In" />
+          <Parameter Name="SwitchTime" Type="datetime" Mode="In" />
+          <Parameter Name="ProductCount" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdDowntime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Id" Type="int" Mode="InOut" />
+          <Parameter Name="Tag_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="DowntimeValue" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdProdUnitShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="S_Id" Type="int" Mode="In" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="Value" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdReasonsTree" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="RawInput" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Id" Type="int" Mode="InOut" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+          <Parameter Name="NomStartTime" Type="datetime" Mode="In" />
+          <Parameter Name="NomEndTime" Type="datetime" Mode="In" />
+          <Parameter Name="NomValue" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdTag" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_InsUpdWorker" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Id" Type="int" Mode="InOut" />
+          <Parameter Name="O_Id" Type="int" Mode="In" />
+          <Parameter Name="PinCode" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsOperator" Type="bit" Mode="In" />
+          <Parameter Name="IsLeader" Type="bit" Mode="In" />
+          <Parameter Name="IsAdmin" Type="bit" Mode="In" />
+          <Parameter Name="IsAvaliable" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_KPI_3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="ProdUnit_Id" Type="int" Mode="In" />
+          <Parameter Name="ProdChangeHist_Id" Type="int" Mode="In" />
+          <Parameter Name="ShiftHist_Id" Type="int" Mode="In" />
+          <Parameter Name="ProductionTimeEndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_RefreshKPI_PU_CS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Now" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_RefreshKPItHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Local_ReportDowntimeOnCustomProdUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PUS_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_Set_IsRecalc_After_Excluded_Interval_Change" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="SH_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_Set_IsRecalc_KPI_PU_Current_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Now" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_UpdDowntimeShiftConfirm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="DH_Ids" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_UpdDowntimeShiftReason" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="DH_Id" Type="bigint" Mode="In" />
+          <Parameter Name="PUTC_Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_Validation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="Tag_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="ProductCrossRefValue" Type="int" Mode="In" />
+          <Parameter Name="O_Id" Type="int" Mode="In" />
+          <Parameter Name="Amount" Type="int" Mode="In" />
+          <Parameter Name="IsDowntimeNow" Type="bit" Mode="In" />
+          <Parameter Name="DowntimeValue" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewChildCause" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PUTC_Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewChildSiblingCause" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PUTC_Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewDowntimeOnCustomProdUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PUS_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewDowntimeOnSingleProdUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="PUS_Ids" Type="varchar(max)" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+          <Parameter Name="SH_Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewReasonTrees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="TreeType" Type="nvarchar" Mode="In" />
+          <Parameter Name="TreeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewShiftListOnCustomProdUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Ids" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewShiftListOnSingleProdUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="PU_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Local_ViewSingleDowntimeConfig" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE">
+          <Parameter Name="FaultComment" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="AffectedRows" Type="int" Mode="InOut" />
+          <Parameter Name="DH_Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SynchronizeDowntime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SOEE" />
+        <EntityContainer Name="LogstorOEEModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Downtime_History" EntityType="Self.Downtime_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Downtime_Shift_History" EntityType="Self.Downtime_Shift_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="iFIX_Tag" EntityType="Self.iFIX_Tag" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI" EntityType="Self.KPI" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI_Calc_Type_Config" EntityType="Self.KPI_Calc_Type_Config" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI_Calculation_Period" EntityType="Self.KPI_Calculation_Period" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI_Calculation_Type" EntityType="Self.KPI_Calculation_Type" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI_History" EntityType="Self.KPI_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="KPI_PU_Current_Summary" EntityType="Self.KPI_PU_Current_Summary" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Lang_Defaults_old" EntityType="Self.Lang_Defaults_old" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Lang_Text_old" EntityType="Self.Lang_Text_old" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Prod_Unit_KPI" EntityType="Self.Prod_Unit_KPI" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Prod_Unit_KPI_CT" EntityType="Self.Prod_Unit_KPI_CT" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Prod_Unit_Shift" EntityType="Self.Prod_Unit_Shift" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Prod_Unit_Tree" EntityType="Self.Prod_Unit_Tree" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Prod_Unit_Tree_Config" EntityType="Self.Prod_Unit_Tree_Config" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Production_Unit" EntityType="Self.Production_Unit" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Production_Unit_Type" EntityType="Self.Production_Unit_Type" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Reason" EntityType="Self.Reason" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Reason_Tree" EntityType="Self.Reason_Tree" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Shift" EntityType="Self.Shift" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Shift_Excluded_Interval_History" EntityType="Self.Shift_Excluded_Interval_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Shift_Excluded_Interval_Type" EntityType="Self.Shift_Excluded_Interval_Type" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Shift_History" EntityType="Self.Shift_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Tree_Cause_Config" EntityType="Self.Tree_Cause_Config" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Tree_Cause_Dependence" EntityType="Self.Tree_Cause_Dependence" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Tree_Level" EntityType="Self.Tree_Level" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Tree_Type" EntityType="Self.Tree_Type" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Users_Security" EntityType="Self.Users_Security" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Validation_History" EntityType="Self.Validation_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Waste_History" EntityType="Self.Waste_History" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Week_Day" EntityType="Self.Week_Day" Schema="SOEE" store:Type="Tables" />
+          <EntitySet Name="Downtime_History_Synch_Help" EntityType="Self.Downtime_History_Synch_Help" store:Type="Tables" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [Downtime_History_Synch_Help].[Id] AS [Id], 
+    [Downtime_History_Synch_Help].[Local_Id] AS [Local_Id], 
+    [Downtime_History_Synch_Help].[Error_Id] AS [Error_Id], 
+    [Downtime_History_Synch_Help].[Station] AS [Station]
+    FROM [SOEE].[Downtime_History_Synch_Help] AS [Downtime_History_Synch_Help]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Errors_old" EntityType="Self.Errors_old" store:Type="Tables" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [Errors_old].[Error_Id] AS [Error_Id], 
+    [Errors_old].[UserName] AS [UserName], 
+    [Errors_old].[ErrorNumber] AS [ErrorNumber], 
+    [Errors_old].[ErrorState] AS [ErrorState], 
+    [Errors_old].[ErrorSeverity] AS [ErrorSeverity], 
+    [Errors_old].[ErrorLine] AS [ErrorLine], 
+    [Errors_old].[ErrorProcedure] AS [ErrorProcedure], 
+    [Errors_old].[ErrorMessage] AS [ErrorMessage], 
+    [Errors_old].[ErrorDateTime] AS [ErrorDateTime]
+    FROM [SOEE].[Errors_old] AS [Errors_old]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewDowntimeLevel" EntityType="Self.ViewDowntimeLevel" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewDowntimeLevel].[Id] AS [Id], 
+    [ViewDowntimeLevel].[Name] AS [Name], 
+    [ViewDowntimeLevel].[Description] AS [Description], 
+    [ViewDowntimeLevel].[Value] AS [Value]
+    FROM [SOEE].[ViewDowntimeLevel] AS [ViewDowntimeLevel]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewDowntimeReasonTree" EntityType="Self.ViewDowntimeReasonTree" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewDowntimeReasonTree].[Id] AS [Id], 
+    [ViewDowntimeReasonTree].[MTL_Id] AS [MTL_Id], 
+    [ViewDowntimeReasonTree].[Name] AS [Name], 
+    [ViewDowntimeReasonTree].[Description] AS [Description]
+    FROM [SOEE].[ViewDowntimeReasonTree] AS [ViewDowntimeReasonTree]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewKPI" EntityType="Self.ViewKPI" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewKPI].[Id] AS [Id], 
+    [ViewKPI].[Name] AS [Name], 
+    [ViewKPI].[Description] AS [Description], 
+    [ViewKPI].[NomKPIEgu] AS [NomKPIEgu]
+    FROM [SOEE].[ViewKPI] AS [ViewKPI]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewKPIHistory" EntityType="Self.ViewKPIHistory" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewKPIHistory].[PU_Id] AS [PU_Id], 
+    [ViewKPIHistory].[SH_Id] AS [SH_Id], 
+    [ViewKPIHistory].[PCH_Id] AS [PCH_Id], 
+    [ViewKPIHistory].[Name] AS [Name], 
+    [ViewKPIHistory].[Description] AS [Description], 
+    [ViewKPIHistory].[Value] AS [Value], 
+    [ViewKPIHistory].[KPIegu] AS [KPIegu]
+    FROM [SOEE].[ViewKPIHistory] AS [ViewKPIHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewProductionUnitTags" EntityType="Self.ViewProductionUnitTags" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewProductionUnitTags].[Id] AS [Id], 
+    [ViewProductionUnitTags].[UnitId] AS [UnitId], 
+    [ViewProductionUnitTags].[TagName] AS [TagName], 
+    [ViewProductionUnitTags].[UnitName] AS [UnitName], 
+    [ViewProductionUnitTags].[TagDesc] AS [TagDesc], 
+    [ViewProductionUnitTags].[UnitDesc] AS [UnitDesc]
+    FROM [SOEE].[ViewProductionUnitTags] AS [ViewProductionUnitTags]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewProdUnitDowntTree" EntityType="Self.ViewProdUnitDowntTree" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewProdUnitDowntTree].[Id] AS [Id], 
+    [ViewProdUnitDowntTree].[PU_Id] AS [PU_Id], 
+    [ViewProdUnitDowntTree].[RT_Id] AS [RT_Id]
+    FROM [SOEE].[ViewProdUnitDowntTree] AS [ViewProdUnitDowntTree]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewProdUnitKPI" EntityType="Self.ViewProdUnitKPI" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewProdUnitKPI].[Id] AS [Id], 
+    [ViewProdUnitKPI].[PU_Id] AS [PU_Id], 
+    [ViewProdUnitKPI].[KPI_Id] AS [KPI_Id], 
+    [ViewProdUnitKPI].[KPIEgu] AS [KPIEgu]
+    FROM [SOEE].[ViewProdUnitKPI] AS [ViewProdUnitKPI]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewProdUnitShift" EntityType="Self.ViewProdUnitShift" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewProdUnitShift].[Id] AS [Id], 
+    [ViewProdUnitShift].[S_Id] AS [S_Id], 
+    [ViewProdUnitShift].[PU_Id] AS [PU_Id], 
+    [ViewProdUnitShift].[StartTime] AS [StartTime], 
+    [ViewProdUnitShift].[EndTime] AS [EndTime], 
+    [ViewProdUnitShift].[Value] AS [Value]
+    FROM [SOEE].[ViewProdUnitShift] AS [ViewProdUnitShift]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewProdUnitShiftManagement" EntityType="Self.ViewProdUnitShiftManagement" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewProdUnitShiftManagement].[Id] AS [Id], 
+    [ViewProdUnitShiftManagement].[S_Id] AS [S_Id], 
+    [ViewProdUnitShiftManagement].[PU_Id] AS [PU_Id], 
+    [ViewProdUnitShiftManagement].[Name] AS [Name], 
+    [ViewProdUnitShiftManagement].[StartTime] AS [StartTime], 
+    [ViewProdUnitShiftManagement].[EndTime] AS [EndTime], 
+    [ViewProdUnitShiftManagement].[Value] AS [Value]
+    FROM [SOEE].[ViewProdUnitShiftManagement] AS [ViewProdUnitShiftManagement]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewReasons" EntityType="Self.ViewReasons" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewReasons].[Id] AS [Id], 
+    [ViewReasons].[Name] AS [Name], 
+    [ViewReasons].[Description] AS [Description], 
+    [ViewReasons].[NomCrossRefValue] AS [NomCrossRefValue]
+    FROM [SOEE].[ViewReasons] AS [ViewReasons]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewReasonTree" EntityType="Self.ViewReasonTree" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewReasonTree].[Id] AS [Id], 
+    [ViewReasonTree].[MTL_Id] AS [MTL_Id], 
+    [ViewReasonTree].[Name] AS [Name], 
+    [ViewReasonTree].[Description] AS [Description]
+    FROM [SOEE].[ViewReasonTree] AS [ViewReasonTree]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewShift" EntityType="Self.ViewShift" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewShift].[Id] AS [Id], 
+    [ViewShift].[Name] AS [Name], 
+    [ViewShift].[Description] AS [Description], 
+    [ViewShift].[NomStartTime] AS [NomStartTime], 
+    [ViewShift].[NomEndTime] AS [NomEndTime], 
+    [ViewShift].[NomValue] AS [NomValue]
+    FROM [SOEE].[ViewShift] AS [ViewShift]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewShiftOnProdUnit" EntityType="Self.ViewShiftOnProdUnit" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewShiftOnProdUnit].[Id] AS [Id], 
+    [ViewShiftOnProdUnit].[PU_Id] AS [PU_Id], 
+    [ViewShiftOnProdUnit].[Name] AS [Name]
+    FROM [SOEE].[ViewShiftOnProdUnit] AS [ViewShiftOnProdUnit]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewTags" EntityType="Self.ViewTags" store:Type="Views" store:Schema="SOEE">
+            <DefiningQuery>SELECT 
+    [ViewTags].[Id] AS [Id], 
+    [ViewTags].[PU_Id] AS [PU_Id], 
+    [ViewTags].[Name] AS [Name], 
+    [ViewTags].[Description] AS [Description]
+    FROM [SOEE].[ViewTags] AS [ViewTags]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LogstorOEEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fn_Local_SplitString_Result">
+          <Property Name="Id" Type="Int64" />
+          <Property Name="Data" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="D_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Localization" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServerName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Downtime_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="TCC_Id" Type="Int64" />
+          <Property Name="TCD_Id" Type="Int64" />
+          <Property Name="PUT_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUTC_Id" Type="Int32" Nullable="false" />
+          <Property Name="TL_Id" Type="Int32" />
+          <Property Name="SH_Id" Type="Int32" />
+          <Property Name="DowntimeValue" Type="Int64" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="IsPlanned" Type="Boolean" />
+          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsSynch" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Downtime_Shift_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="DH_Id" Type="Int64" />
+          <Property Name="SH_Id" Type="Int64" />
+          <Property Name="PUS_Id" Type="Int32" />
+          <Property Name="C_Id" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="IsPlanned" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsSynch" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsNational" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="iFIX_Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomKPIEgu" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calc_Type_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WD_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPICT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calculation_Period">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="RefreshRate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_Calculation_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUKPI_Id" Type="Int32" Nullable="false" />
+          <Property Name="SH_Id" Type="Int64" />
+          <Property Name="PCH_Id" Type="Int64" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="IsRecalc" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI_PU_Current_Summary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPI_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUKPICT_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPICP_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPICT_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTimePlanned" Type="DateTime" Precision="3" />
+          <Property Name="Value" Type="Single" />
+          <Property Name="IsRecalc" Type="Boolean" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lang_Defaults_old">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KEY_Id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Default_Text" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lang_Text_old">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KEY_Id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NLS" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="TEXT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_KPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPI_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPIEgu" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_KPI_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUKPI_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPICT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Shift">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="S_Id" Type="Int32" Nullable="false" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Tree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="RT_Id" Type="Int32" Nullable="false" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Unit_Tree_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUT_Id" Type="Int32" Nullable="false" />
+          <Property Name="TCC_Id" Type="Int64" Nullable="false" />
+          <Property Name="CrossRefValue" Type="Int32" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsPlanned" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Production_Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PUT_Id" Type="Int32" Nullable="false" />
+          <Property Name="D_Id" Type="Int32" Nullable="false" />
+          <Property Name="A_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Production_Unit_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reason">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomCrossRefValue" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reason_Tree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MTL_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomStartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NomEndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NomValue" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_Excluded_Interval_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUS_Id" Type="Int32" Nullable="false" />
+          <Property Name="SH_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_Excluded_Interval_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUS_Id" Type="Int32" Nullable="false" />
+          <Property Name="SEIT_Id" Type="Int32" Nullable="false" />
+          <Property Name="WD_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="IsHoliday" Type="Boolean" Nullable="false" />
+          <Property Name="IsRecalc" Type="Boolean" />
+          <Property Name="IsSynch" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Cause_Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RT_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NamePL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionPL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomCrossRefValue" Type="Int32" />
+          <Property Name="NomIsPlanned" Type="Boolean" Nullable="false" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Cause_Dependence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MTCD_Id" Type="Int64" />
+          <Property Name="RT_Id" Type="Int32" Nullable="false" />
+          <Property Name="TCC_Id" Type="Int64" Nullable="false" />
+          <Property Name="TL_Id" Type="Int32" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="TT_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tree_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Validation_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SLH_Id" Type="Int32" />
+          <Property Name="PCH_Id" Type="Int32" />
+          <Property Name="SH_Id" Type="Int32" />
+          <Property Name="PCSH_Id" Type="Int32" />
+          <Property Name="O_Id" Type="Int32" />
+          <Property Name="OH_Id" Type="Int32" />
+          <Property Name="DH_Id" Type="Int32" />
+          <Property Name="DPH_Id" Type="Int32" />
+          <Property Name="DSH_Id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Week_Day">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Name_PL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Downtime_History_Synch_Help">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Local_Id" />
+            <PropertyRef Name="Station" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Local_Id" Type="Int64" Nullable="false" />
+          <Property Name="Error_Id" Type="Int32" />
+          <Property Name="Station" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Errors_old">
+          <Key>
+            <PropertyRef Name="Error_Id" />
+          </Key>
+          <Property Name="Error_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorNumber" Type="Int32" />
+          <Property Name="ErrorState" Type="Int32" />
+          <Property Name="ErrorSeverity" Type="Int32" />
+          <Property Name="ErrorLine" Type="Int32" />
+          <Property Name="ErrorProcedure" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ViewDowntimeLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewDowntimeReasonTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MTL_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MTL_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewKPI">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomKPIEgu" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewKPIHistory">
+          <Key>
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="SH_Id" Type="Int64" />
+          <Property Name="PCH_Id" Type="Int64" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="KPIegu" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewProductionUnitTag">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="TagName" />
+            <PropertyRef Name="UnitName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="TagName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TagDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UnitDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewProdUnitDowntTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="RT_Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="RT_Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewProdUnitKPI">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="KPI_Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPI_Id" Type="Int32" Nullable="false" />
+          <Property Name="KPIEgu" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewProdUnitShift">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="S_Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="S_Id" Type="Int32" Nullable="false" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="EndTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewProdUnitShiftManagement">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="S_Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="S_Id" Type="Int32" Nullable="false" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="EndTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewReason">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomCrossRefValue" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewReasonTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MTL_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MTL_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewShift">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="NomValue" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NomStartTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="NomEndTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="NomValue" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewShiftOnProdUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewTag">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PU_Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="LogstorOEEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="Self.Area" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Downtime_History" EntityType="Self.Downtime_History" />
+          <EntitySet Name="Downtime_Shift_History" EntityType="Self.Downtime_Shift_History" />
+          <EntitySet Name="Holidays" EntityType="Self.Holiday" />
+          <EntitySet Name="iFIX_Tag" EntityType="Self.iFIX_Tag" />
+          <EntitySet Name="KPIs" EntityType="Self.KPI" />
+          <EntitySet Name="KPI_Calc_Type_Config" EntityType="Self.KPI_Calc_Type_Config" />
+          <EntitySet Name="KPI_Calculation_Period" EntityType="Self.KPI_Calculation_Period" />
+          <EntitySet Name="KPI_Calculation_Type" EntityType="Self.KPI_Calculation_Type" />
+          <EntitySet Name="KPI_History" EntityType="Self.KPI_History" />
+          <EntitySet Name="KPI_PU_Current_Summary" EntityType="Self.KPI_PU_Current_Summary" />
+          <EntitySet Name="Lang_Defaults_old" EntityType="Self.Lang_Defaults_old" />
+          <EntitySet Name="Lang_Text_old" EntityType="Self.Lang_Text_old" />
+          <EntitySet Name="Prod_Unit_KPI" EntityType="Self.Prod_Unit_KPI" />
+          <EntitySet Name="Prod_Unit_KPI_CT" EntityType="Self.Prod_Unit_KPI_CT" />
+          <EntitySet Name="Prod_Unit_Shift" EntityType="Self.Prod_Unit_Shift" />
+          <EntitySet Name="Prod_Unit_Tree" EntityType="Self.Prod_Unit_Tree" />
+          <EntitySet Name="Prod_Unit_Tree_Config" EntityType="Self.Prod_Unit_Tree_Config" />
+          <EntitySet Name="Production_Unit" EntityType="Self.Production_Unit" />
+          <EntitySet Name="Production_Unit_Type" EntityType="Self.Production_Unit_Type" />
+          <EntitySet Name="Reasons" EntityType="Self.Reason" />
+          <EntitySet Name="Reason_Tree" EntityType="Self.Reason_Tree" />
+          <EntitySet Name="Shifts" EntityType="Self.Shift" />
+          <EntitySet Name="Shift_Excluded_Interval_History" EntityType="Self.Shift_Excluded_Interval_History" />
+          <EntitySet Name="Shift_Excluded_Interval_Type" EntityType="Self.Shift_Excluded_Interval_Type" />
+          <EntitySet Name="Shift_History" EntityType="Self.Shift_History" />
+          <EntitySet Name="Tree_Cause_Config" EntityType="Self.Tree_Cause_Config" />
+          <EntitySet Name="Tree_Cause_Dependence" EntityType="Self.Tree_Cause_Dependence" />
+          <EntitySet Name="Tree_Level" EntityType="Self.Tree_Level" />
+          <EntitySet Name="Tree_Type" EntityType="Self.Tree_Type" />
+          <EntitySet Name="Validation_History" EntityType="Self.Validation_History" />
+          <EntitySet Name="Week_Day" EntityType="Self.Week_Day" />
+          <EntitySet Name="Downtime_History_Synch_Help" EntityType="Self.Downtime_History_Synch_Help" />
+          <EntitySet Name="Errors_old" EntityType="Self.Errors_old" />
+          <EntitySet Name="ViewDowntimeLevels" EntityType="Self.ViewDowntimeLevel" />
+          <EntitySet Name="ViewDowntimeReasonTrees" EntityType="Self.ViewDowntimeReasonTree" />
+          <EntitySet Name="ViewKPIs" EntityType="Self.ViewKPI" />
+          <EntitySet Name="ViewKPIHistories" EntityType="Self.ViewKPIHistory" />
+          <EntitySet Name="ViewProductionUnitTags" EntityType="Self.ViewProductionUnitTag" />
+          <EntitySet Name="ViewProdUnitDowntTrees" EntityType="Self.ViewProdUnitDowntTree" />
+          <EntitySet Name="ViewProdUnitKPIs" EntityType="Self.ViewProdUnitKPI" />
+          <EntitySet Name="ViewProdUnitShifts" EntityType="Self.ViewProdUnitShift" />
+          <EntitySet Name="ViewProdUnitShiftManagements" EntityType="Self.ViewProdUnitShiftManagement" />
+          <EntitySet Name="ViewReasons" EntityType="Self.ViewReason" />
+          <EntitySet Name="ViewReasonTrees" EntityType="Self.ViewReasonTree" />
+          <EntitySet Name="ViewShifts" EntityType="Self.ViewShift" />
+          <EntitySet Name="ViewShiftOnProdUnits" EntityType="Self.ViewShiftOnProdUnit" />
+          <EntitySet Name="ViewTags" EntityType="Self.ViewTag" />
+          <FunctionImport Name="fn_Local_SplitString" IsComposable="true" ReturnType="Collection(LogstorOEEModel.fn_Local_SplitString_Result)">
+            <Parameter Name="String" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_AutoFillSH">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DaysAhead" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_CalcTimeToShiftEnd">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="Timeleft" Mode="InOut" Type="Int32" />
+            <Parameter Name="Now" Mode="In" Type="DateTime" />
+            <Parameter Name="Tag" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_CalculateKpis">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Tag_Name" Mode="In" Type="String" />
+            <Parameter Name="ProductCount" Mode="In" Type="Int32" />
+            <Parameter Name="CurrentProduct" Mode="In" Type="Boolean" />
+            <Parameter Name="CurrentShift" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_CalculateKpisWithIds">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ProductCount" Mode="In" Type="Int32" />
+            <Parameter Name="TimeStamp" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_Create_Holiday_Config" />
+          <FunctionImport Name="sp_Local_Create_Initial_Config" />
+          <FunctionImport Name="sp_Local_FindShift">
+            <Parameter Name="SH_Id" Mode="InOut" Type="Int32" />
+            <Parameter Name="Time" Mode="In" Type="DateTime" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsertCurrentShifts">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsertNewShiftToSH">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="TagName" Mode="In" Type="String" />
+            <Parameter Name="SwitchTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ProductCount" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdDowntime">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Id" Mode="InOut" Type="Int32" />
+            <Parameter Name="Tag_Name" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="DowntimeValue" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdProdUnitShift">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="S_Id" Mode="In" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="Value" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdReasonsTree">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="RawInput" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdShift">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Id" Mode="InOut" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="NomStartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="NomEndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="NomValue" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdTag">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_InsUpdWorker">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Id" Mode="InOut" Type="Int32" />
+            <Parameter Name="O_Id" Mode="In" Type="Int32" />
+            <Parameter Name="PinCode" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="IsOperator" Mode="In" Type="Boolean" />
+            <Parameter Name="IsLeader" Mode="In" Type="Boolean" />
+            <Parameter Name="IsAdmin" Mode="In" Type="Boolean" />
+            <Parameter Name="IsAvaliable" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_KPI_3">
+            <Parameter Name="ProdUnit_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ProdChangeHist_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ShiftHist_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ProductionTimeEndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_RefreshKPI_PU_CS">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Now" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_RefreshKPItHistory">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ReportDowntimeOnCustomProdUnit" ReturnType="Collection(LogstorOEEModel.sp_Local_ReportDowntimeOnCustomProdUnit_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Ids" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift" ReturnType="Collection(LogstorOEEModel.sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Ids" Mode="In" Type="String" />
+            <Parameter Name="PUS_Ids" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_Set_IsRecalc_After_Excluded_Interval_Change">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="SH_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_Set_IsRecalc_KPI_PU_Current_Summary">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Now" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_UpdDowntimeShiftConfirm">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="DH_Ids" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_UpdDowntimeShiftReason">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="DH_Id" Mode="In" Type="Int64" />
+            <Parameter Name="PUTC_Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_Validation">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="Tag_Name" Mode="In" Type="String" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ProductCrossRefValue" Mode="In" Type="Int32" />
+            <Parameter Name="O_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Amount" Mode="In" Type="Int32" />
+            <Parameter Name="IsDowntimeNow" Mode="In" Type="Boolean" />
+            <Parameter Name="DowntimeValue" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewChildCause" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewChildCause_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PUTC_Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewChildSiblingCause" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewChildSiblingCause_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PUTC_Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewDowntimeOnCustomProdUnit" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewDowntimeOnCustomProdUnit_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Ids" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Ids" Mode="In" Type="String" />
+            <Parameter Name="PUS_Ids" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewDowntimeOnSingleProdUnit" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnit_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="PUS_Ids" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+            <Parameter Name="SH_Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewReasonTrees" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewReasonTrees_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="TreeType" Mode="In" Type="String" />
+            <Parameter Name="TreeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewShiftListOnCustomProdUnit" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewShiftListOnCustomProdUnit_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Ids" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewShiftListOnSingleProdUnit" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewShiftListOnSingleProdUnit_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="PU_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Local_ViewSingleDowntimeConfig" ReturnType="Collection(LogstorOEEModel.sp_Local_ViewSingleDowntimeConfig_Result)">
+            <Parameter Name="FaultComment" Mode="InOut" Type="String" />
+            <Parameter Name="AffectedRows" Mode="InOut" Type="Int32" />
+            <Parameter Name="DH_Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SynchronizeDowntime" />
+          <EntitySet Name="Users_Security" EntityType="LogstorOEEModel.Users_Security" />
+          <EntitySet Name="Waste_History" EntityType="LogstorOEEModel.Waste_History" />
+        </EntityContainer>
+        <ComplexType Name="sp_Local_ReportDowntimeOnCustomProdUnit_Result">
+          <Property Type="String" Name="ProdUnitName" Nullable="false" MaxLength="40" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="false" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift_Result">
+          <Property Type="String" Name="ProdUnitName" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="40" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="true" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewChildCause_Result">
+          <Property Type="Int32" Name="PUTC_Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="40" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="Int32" Name="CrossRefValue" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewChildSiblingCause_Result">
+          <Property Type="Int32" Name="PUTC_Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="40" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="Int32" Name="CrossRefValue" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewDowntimeOnCustomProdUnit_Result">
+          <Property Type="Int64" Name="DH_Id" Nullable="false" />
+          <Property Type="Int32" Name="PU_Id" Nullable="false" />
+          <Property Type="String" Name="ProdUnitName" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="TL_Id" Nullable="true" />
+          <Property Type="Int64" Name="DowntimeValue" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="false" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift_Result">
+          <Property Type="Int64" Name="DSH_Id" Nullable="false" />
+          <Property Type="Int64" Name="DH_Id" Nullable="false" />
+          <Property Type="Int32" Name="PU_Id" Nullable="false" />
+          <Property Type="String" Name="ProdUnitName" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="PUS_Id" Nullable="true" />
+          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="TL_Id" Nullable="true" />
+          <Property Type="Int64" Name="DowntimeValue" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="true" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewDowntimeOnSingleProdUnit_Result">
+          <Property Type="Int64" Name="DH_Id" Nullable="false" />
+          <Property Type="Int32" Name="PU_Id" Nullable="false" />
+          <Property Type="Int32" Name="TL_Id" Nullable="true" />
+          <Property Type="Int64" Name="DowntimeValue" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="false" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift_Result">
+          <Property Type="Int64" Name="DSH_Id" Nullable="false" />
+          <Property Type="Int64" Name="DH_Id" Nullable="false" />
+          <Property Type="Int32" Name="PU_Id" Nullable="false" />
+          <Property Type="Int32" Name="PUS_Id" Nullable="true" />
+          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="TL_Id" Nullable="true" />
+          <Property Type="Int64" Name="DowntimeValue" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="true" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift_Result">
+          <Property Type="Int64" Name="DSH_Id" Nullable="false" />
+          <Property Type="Int64" Name="DH_Id" Nullable="false" />
+          <Property Type="Int32" Name="PU_Id" Nullable="false" />
+          <Property Type="Int32" Name="TL_Id" Nullable="true" />
+          <Property Type="Int64" Name="DowntimeValue" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="true" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewReasonTrees_Result">
+          <Property Type="String" Name="CauseDescription" Nullable="true" MaxLength="255" />
+          <Property Type="Int64" Name="MTCD_Id" Nullable="true" />
+          <Property Type="Int64" Name="TCC_Id" Nullable="false" />
+          <Property Type="String" Name="RTName" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Column1" Nullable="true" />
+          <Property Type="Int32" Name="NomCrossRefValue" Nullable="true" />
+          <Property Type="String" Name="Column2" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewShiftListOnCustomProdUnit_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="Id1" Nullable="false" />
+          <Property Type="String" Name="Name1" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewShiftListOnSingleProdUnit_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="sp_Local_ViewSingleDowntimeConfig_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PUTC3_Main_Id" Nullable="false" />
+          <Property Type="Boolean" Name="IsPlanned" Nullable="false" />
+          <Property Type="Int32" Name="PUTC1_Id" Nullable="false" />
+          <Property Type="String" Name="TCD1_Name" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="PUTC2_Id" Nullable="false" />
+          <Property Type="String" Name="TCD2_Name" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="PUTC3_Id" Nullable="false" />
+          <Property Type="String" Name="TCD3_Name" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <EntityType Name="Users_Security">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Waste_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PU_Id" Type="Int32" Nullable="false" />
+          <Property Name="PUP_Id" Type="Int32" />
+          <Property Name="PUS_Id" Type="Int32" />
+          <Property Name="PUW_Id" Type="Int32" />
+          <Property Name="C_Id" Type="Int32" />
+          <Property Name="PCH_Id" Type="Int32" />
+          <Property Name="SH_Id" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LogstorOEEModelStoreContainer" CdmEntityContainer="LogstorOEEEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="D_Id" ColumnName="D_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="Localization" ColumnName="Localization" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downtime_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Downtime_History">
+              <MappingFragment StoreEntitySet="Downtime_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="TCC_Id" ColumnName="TCC_Id" />
+                <ScalarProperty Name="TCD_Id" ColumnName="TCD_Id" />
+                <ScalarProperty Name="PUT_Id" ColumnName="PUT_Id" />
+                <ScalarProperty Name="PUTC_Id" ColumnName="PUTC_Id" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsSynch" ColumnName="IsSynch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downtime_Shift_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Downtime_Shift_History">
+              <MappingFragment StoreEntitySet="Downtime_Shift_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="C_Id" ColumnName="C_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsSynch" ColumnName="IsSynch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holidays">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Holiday">
+              <MappingFragment StoreEntitySet="Holiday">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsNational" ColumnName="IsNational" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="iFIX_Tag">
+            <EntityTypeMapping TypeName="LogstorOEEModel.iFIX_Tag">
+              <MappingFragment StoreEntitySet="iFIX_Tag">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPIs">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI">
+              <MappingFragment StoreEntitySet="KPI">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="NomKPIEgu" ColumnName="NomKPIEgu" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_Calc_Type_Config">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI_Calc_Type_Config">
+              <MappingFragment StoreEntitySet="KPI_Calc_Type_Config">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WD_Id" ColumnName="WD_Id" />
+                <ScalarProperty Name="KPICT_Id" ColumnName="KPICT_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_Calculation_Period">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI_Calculation_Period">
+              <MappingFragment StoreEntitySet="KPI_Calculation_Period">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="RefreshRate" ColumnName="RefreshRate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_Calculation_Type">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI_Calculation_Type">
+              <MappingFragment StoreEntitySet="KPI_Calculation_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI_History">
+              <MappingFragment StoreEntitySet="KPI_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="PUKPI_Id" ColumnName="PUKPI_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="PCH_Id" ColumnName="PCH_Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsRecalc" ColumnName="IsRecalc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_PU_Current_Summary">
+            <EntityTypeMapping TypeName="LogstorOEEModel.KPI_PU_Current_Summary">
+              <MappingFragment StoreEntitySet="KPI_PU_Current_Summary">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="KPI_Id" ColumnName="KPI_Id" />
+                <ScalarProperty Name="PUKPICT_Id" ColumnName="PUKPICT_Id" />
+                <ScalarProperty Name="KPICP_Id" ColumnName="KPICP_Id" />
+                <ScalarProperty Name="KPICT_Id" ColumnName="KPICT_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="EndTimePlanned" ColumnName="EndTimePlanned" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsRecalc" ColumnName="IsRecalc" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lang_Defaults_old">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Lang_Defaults_old">
+              <MappingFragment StoreEntitySet="Lang_Defaults_old">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="KEY_Id" ColumnName="KEY_Id" />
+                <ScalarProperty Name="Default_Text" ColumnName="Default_Text" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lang_Text_old">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Lang_Text_old">
+              <MappingFragment StoreEntitySet="Lang_Text_old">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KEY_Id" ColumnName="KEY_Id" />
+                <ScalarProperty Name="NLS" ColumnName="NLS" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Unit_KPI">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Prod_Unit_KPI">
+              <MappingFragment StoreEntitySet="Prod_Unit_KPI">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="KPI_Id" ColumnName="KPI_Id" />
+                <ScalarProperty Name="KPIEgu" ColumnName="KPIEgu" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Unit_KPI_CT">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Prod_Unit_KPI_CT">
+              <MappingFragment StoreEntitySet="Prod_Unit_KPI_CT">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PUKPI_Id" ColumnName="PUKPI_Id" />
+                <ScalarProperty Name="KPICT_Id" ColumnName="KPICT_Id" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Unit_Shift">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Prod_Unit_Shift">
+              <MappingFragment StoreEntitySet="Prod_Unit_Shift">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="S_Id" ColumnName="S_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Unit_Tree">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Prod_Unit_Tree">
+              <MappingFragment StoreEntitySet="Prod_Unit_Tree">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="RT_Id" ColumnName="RT_Id" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Unit_Tree_Config">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Prod_Unit_Tree_Config">
+              <MappingFragment StoreEntitySet="Prod_Unit_Tree_Config">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PUT_Id" ColumnName="PUT_Id" />
+                <ScalarProperty Name="TCC_Id" ColumnName="TCC_Id" />
+                <ScalarProperty Name="CrossRefValue" ColumnName="CrossRefValue" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Production_Unit">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Production_Unit">
+              <MappingFragment StoreEntitySet="Production_Unit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="PUT_Id" ColumnName="PUT_Id" />
+                <ScalarProperty Name="D_Id" ColumnName="D_Id" />
+                <ScalarProperty Name="A_Id" ColumnName="A_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Production_Unit_Type">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Production_Unit_Type">
+              <MappingFragment StoreEntitySet="Production_Unit_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reasons">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Reason">
+              <MappingFragment StoreEntitySet="Reason">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="NomCrossRefValue" ColumnName="NomCrossRefValue" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reason_Tree">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Reason_Tree">
+              <MappingFragment StoreEntitySet="Reason_Tree">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MTL_Id" ColumnName="MTL_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shifts">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Shift">
+              <MappingFragment StoreEntitySet="Shift">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="NomStartTime" ColumnName="NomStartTime" />
+                <ScalarProperty Name="NomEndTime" ColumnName="NomEndTime" />
+                <ScalarProperty Name="NomValue" ColumnName="NomValue" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shift_Excluded_Interval_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Shift_Excluded_Interval_History">
+              <MappingFragment StoreEntitySet="Shift_Excluded_Interval_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shift_Excluded_Interval_Type">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Shift_Excluded_Interval_Type">
+              <MappingFragment StoreEntitySet="Shift_Excluded_Interval_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shift_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Shift_History">
+              <MappingFragment StoreEntitySet="Shift_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="SEIT_Id" ColumnName="SEIT_Id" />
+                <ScalarProperty Name="WD_Id" ColumnName="WD_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
+                <ScalarProperty Name="IsRecalc" ColumnName="IsRecalc" />
+                <ScalarProperty Name="IsSynch" ColumnName="IsSynch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tree_Cause_Config">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Tree_Cause_Config">
+              <MappingFragment StoreEntitySet="Tree_Cause_Config">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RT_Id" ColumnName="RT_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NamePL" ColumnName="NamePL" />
+                <ScalarProperty Name="DescriptionPL" ColumnName="DescriptionPL" />
+                <ScalarProperty Name="NomCrossRefValue" ColumnName="NomCrossRefValue" />
+                <ScalarProperty Name="NomIsPlanned" ColumnName="NomIsPlanned" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tree_Cause_Dependence">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Tree_Cause_Dependence">
+              <MappingFragment StoreEntitySet="Tree_Cause_Dependence">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MTCD_Id" ColumnName="MTCD_Id" />
+                <ScalarProperty Name="RT_Id" ColumnName="RT_Id" />
+                <ScalarProperty Name="TCC_Id" ColumnName="TCC_Id" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tree_Level">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Tree_Level">
+              <MappingFragment StoreEntitySet="Tree_Level">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="TT_Id" ColumnName="TT_Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tree_Type">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Tree_Type">
+              <MappingFragment StoreEntitySet="Tree_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Validation_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Validation_History">
+              <MappingFragment StoreEntitySet="Validation_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="SLH_Id" ColumnName="SLH_Id" />
+                <ScalarProperty Name="PCH_Id" ColumnName="PCH_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="PCSH_Id" ColumnName="PCSH_Id" />
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+                <ScalarProperty Name="OH_Id" ColumnName="OH_Id" />
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="DPH_Id" ColumnName="DPH_Id" />
+                <ScalarProperty Name="DSH_Id" ColumnName="DSH_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Week_Day">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Week_Day">
+              <MappingFragment StoreEntitySet="Week_Day">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Name_PL" ColumnName="Name_PL" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downtime_History_Synch_Help">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Downtime_History_Synch_Help">
+              <MappingFragment StoreEntitySet="Downtime_History_Synch_Help">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Local_Id" ColumnName="Local_Id" />
+                <ScalarProperty Name="Error_Id" ColumnName="Error_Id" />
+                <ScalarProperty Name="Station" ColumnName="Station" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors_old">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Errors_old">
+              <MappingFragment StoreEntitySet="Errors_old">
+                <ScalarProperty Name="Error_Id" ColumnName="Error_Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ErrorNumber" ColumnName="ErrorNumber" />
+                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorDateTime" ColumnName="ErrorDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewDowntimeLevels">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewDowntimeLevel">
+              <MappingFragment StoreEntitySet="ViewDowntimeLevel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewDowntimeReasonTrees">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewDowntimeReasonTree">
+              <MappingFragment StoreEntitySet="ViewDowntimeReasonTree">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MTL_Id" ColumnName="MTL_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewKPIs">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewKPI">
+              <MappingFragment StoreEntitySet="ViewKPI">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NomKPIEgu" ColumnName="NomKPIEgu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewKPIHistories">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewKPIHistory">
+              <MappingFragment StoreEntitySet="ViewKPIHistory">
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="PCH_Id" ColumnName="PCH_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="KPIegu" ColumnName="KPIegu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProductionUnitTags">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewProductionUnitTag">
+              <MappingFragment StoreEntitySet="ViewProductionUnitTags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="TagDesc" ColumnName="TagDesc" />
+                <ScalarProperty Name="UnitDesc" ColumnName="UnitDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProdUnitDowntTrees">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewProdUnitDowntTree">
+              <MappingFragment StoreEntitySet="ViewProdUnitDowntTree">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="RT_Id" ColumnName="RT_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProdUnitKPIs">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewProdUnitKPI">
+              <MappingFragment StoreEntitySet="ViewProdUnitKPI">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="KPI_Id" ColumnName="KPI_Id" />
+                <ScalarProperty Name="KPIEgu" ColumnName="KPIEgu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProdUnitShifts">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewProdUnitShift">
+              <MappingFragment StoreEntitySet="ViewProdUnitShift">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="S_Id" ColumnName="S_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProdUnitShiftManagements">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewProdUnitShiftManagement">
+              <MappingFragment StoreEntitySet="ViewProdUnitShiftManagement">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="S_Id" ColumnName="S_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewReasons">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewReason">
+              <MappingFragment StoreEntitySet="ViewReasons">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NomCrossRefValue" ColumnName="NomCrossRefValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewReasonTrees">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewReasonTree">
+              <MappingFragment StoreEntitySet="ViewReasonTree">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MTL_Id" ColumnName="MTL_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewShifts">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewShift">
+              <MappingFragment StoreEntitySet="ViewShift">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NomStartTime" ColumnName="NomStartTime" />
+                <ScalarProperty Name="NomEndTime" ColumnName="NomEndTime" />
+                <ScalarProperty Name="NomValue" ColumnName="NomValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewShiftOnProdUnits">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewShiftOnProdUnit">
+              <MappingFragment StoreEntitySet="ViewShiftOnProdUnit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewTags">
+            <EntityTypeMapping TypeName="LogstorOEEModel.ViewTag">
+              <MappingFragment StoreEntitySet="ViewTags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="LogstorOEEModel.Store.fn_Local_SplitString" FunctionImportName="fn_Local_SplitString">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.fn_Local_SplitString_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_AutoFillSH" FunctionName="LogstorOEEModel.Store.sp_Local_AutoFillSH" />
+          <FunctionImportMapping FunctionImportName="sp_Local_CalcTimeToShiftEnd" FunctionName="LogstorOEEModel.Store.sp_Local_CalcTimeToShiftEnd" />
+          <FunctionImportMapping FunctionImportName="sp_Local_CalculateKpis" FunctionName="LogstorOEEModel.Store.sp_Local_CalculateKpis" />
+          <FunctionImportMapping FunctionImportName="sp_Local_CalculateKpisWithIds" FunctionName="LogstorOEEModel.Store.sp_Local_CalculateKpisWithIds" />
+          <FunctionImportMapping FunctionImportName="sp_Local_Create_Holiday_Config" FunctionName="LogstorOEEModel.Store.sp_Local_Create_Holiday_Config" />
+          <FunctionImportMapping FunctionImportName="sp_Local_Create_Initial_Config" FunctionName="LogstorOEEModel.Store.sp_Local_Create_Initial_Config" />
+          <FunctionImportMapping FunctionImportName="sp_Local_FindShift" FunctionName="LogstorOEEModel.Store.sp_Local_FindShift" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsertCurrentShifts" FunctionName="LogstorOEEModel.Store.sp_Local_InsertCurrentShifts" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsertNewShiftToSH" FunctionName="LogstorOEEModel.Store.sp_Local_InsertNewShiftToSH" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdDowntime" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdDowntime" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdProdUnitShift" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdProdUnitShift" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdReasonsTree" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdReasonsTree" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdShift" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdShift" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdTag" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdTag" />
+          <FunctionImportMapping FunctionImportName="sp_Local_InsUpdWorker" FunctionName="LogstorOEEModel.Store.sp_Local_InsUpdWorker" />
+          <FunctionImportMapping FunctionImportName="sp_Local_KPI_3" FunctionName="LogstorOEEModel.Store.sp_Local_KPI_3" />
+          <FunctionImportMapping FunctionImportName="sp_Local_RefreshKPI_PU_CS" FunctionName="LogstorOEEModel.Store.sp_Local_RefreshKPI_PU_CS" />
+          <FunctionImportMapping FunctionImportName="sp_Local_RefreshKPItHistory" FunctionName="LogstorOEEModel.Store.sp_Local_RefreshKPItHistory" />
+          <FunctionImportMapping FunctionImportName="sp_Local_ReportDowntimeOnCustomProdUnit" FunctionName="LogstorOEEModel.Store.sp_Local_ReportDowntimeOnCustomProdUnit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ReportDowntimeOnCustomProdUnit_Result">
+                <ScalarProperty Name="ProdUnitName" ColumnName="ProdUnitName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift" FunctionName="LogstorOEEModel.Store.sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift_Result">
+                <ScalarProperty Name="ProdUnitName" ColumnName="ProdUnitName" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_Set_IsRecalc_After_Excluded_Interval_Change" FunctionName="LogstorOEEModel.Store.sp_Local_Set_IsRecalc_After_Excluded_Interval_Change" />
+          <FunctionImportMapping FunctionImportName="sp_Local_Set_IsRecalc_KPI_PU_Current_Summary" FunctionName="LogstorOEEModel.Store.sp_Local_Set_IsRecalc_KPI_PU_Current_Summary" />
+          <FunctionImportMapping FunctionImportName="sp_Local_UpdDowntimeShiftConfirm" FunctionName="LogstorOEEModel.Store.sp_Local_UpdDowntimeShiftConfirm" />
+          <FunctionImportMapping FunctionImportName="sp_Local_UpdDowntimeShiftReason" FunctionName="LogstorOEEModel.Store.sp_Local_UpdDowntimeShiftReason" />
+          <FunctionImportMapping FunctionImportName="sp_Local_Validation" FunctionName="LogstorOEEModel.Store.sp_Local_Validation" />
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewChildCause" FunctionName="LogstorOEEModel.Store.sp_Local_ViewChildCause">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewChildCause_Result">
+                <ScalarProperty Name="PUTC_Id" ColumnName="PUTC_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="CrossRefValue" ColumnName="CrossRefValue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewChildSiblingCause" FunctionName="LogstorOEEModel.Store.sp_Local_ViewChildSiblingCause">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewChildSiblingCause_Result">
+                <ScalarProperty Name="PUTC_Id" ColumnName="PUTC_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="CrossRefValue" ColumnName="CrossRefValue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewDowntimeOnCustomProdUnit" FunctionName="LogstorOEEModel.Store.sp_Local_ViewDowntimeOnCustomProdUnit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewDowntimeOnCustomProdUnit_Result">
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="ProdUnitName" ColumnName="ProdUnitName" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift" FunctionName="LogstorOEEModel.Store.sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift_Result">
+                <ScalarProperty Name="DSH_Id" ColumnName="DSH_Id" />
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="ProdUnitName" ColumnName="ProdUnitName" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewDowntimeOnSingleProdUnit" FunctionName="LogstorOEEModel.Store.sp_Local_ViewDowntimeOnSingleProdUnit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnit_Result">
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift" FunctionName="LogstorOEEModel.Store.sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift_Result">
+                <ScalarProperty Name="DSH_Id" ColumnName="DSH_Id" />
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift" FunctionName="LogstorOEEModel.Store.sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift_Result">
+                <ScalarProperty Name="DSH_Id" ColumnName="DSH_Id" />
+                <ScalarProperty Name="DH_Id" ColumnName="DH_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="TL_Id" ColumnName="TL_Id" />
+                <ScalarProperty Name="DowntimeValue" ColumnName="DowntimeValue" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewReasonTrees" FunctionName="LogstorOEEModel.Store.sp_Local_ViewReasonTrees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewReasonTrees_Result">
+                <ScalarProperty Name="CauseDescription" ColumnName="CauseDescription" />
+                <ScalarProperty Name="MTCD_Id" ColumnName="MTCD_Id" />
+                <ScalarProperty Name="TCC_Id" ColumnName="TCC_Id" />
+                <ScalarProperty Name="RTName" ColumnName="RTName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="NomCrossRefValue" ColumnName="NomCrossRefValue" />
+                <ScalarProperty Name="Column2" ColumnName="Column2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewShiftListOnCustomProdUnit" FunctionName="LogstorOEEModel.Store.sp_Local_ViewShiftListOnCustomProdUnit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewShiftListOnCustomProdUnit_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id1" ColumnName="Id1" />
+                <ScalarProperty Name="Name1" ColumnName="Name1" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewShiftListOnSingleProdUnit" FunctionName="LogstorOEEModel.Store.sp_Local_ViewShiftListOnSingleProdUnit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewShiftListOnSingleProdUnit_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Local_ViewSingleDowntimeConfig" FunctionName="LogstorOEEModel.Store.sp_Local_ViewSingleDowntimeConfig">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogstorOEEModel.sp_Local_ViewSingleDowntimeConfig_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="PUTC3_Main_Id" ColumnName="PUTC3_Main_Id" />
+                <ScalarProperty Name="IsPlanned" ColumnName="IsPlanned" />
+                <ScalarProperty Name="PUTC1_Id" ColumnName="PUTC1_Id" />
+                <ScalarProperty Name="TCD1_Name" ColumnName="TCD1_Name" />
+                <ScalarProperty Name="PUTC2_Id" ColumnName="PUTC2_Id" />
+                <ScalarProperty Name="TCD2_Name" ColumnName="TCD2_Name" />
+                <ScalarProperty Name="PUTC3_Id" ColumnName="PUTC3_Id" />
+                <ScalarProperty Name="TCD3_Name" ColumnName="TCD3_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SynchronizeDowntime" FunctionName="LogstorOEEModel.Store.SynchronizeDowntime" />
+          <EntitySetMapping Name="Users_Security">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Users_Security">
+              <MappingFragment StoreEntitySet="Users_Security">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Waste_History">
+            <EntityTypeMapping TypeName="LogstorOEEModel.Waste_History">
+              <MappingFragment StoreEntitySet="Waste_History">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="isConfirmed" ColumnName="isConfirmed" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="SH_Id" ColumnName="SH_Id" />
+                <ScalarProperty Name="PCH_Id" ColumnName="PCH_Id" />
+                <ScalarProperty Name="C_Id" ColumnName="C_Id" />
+                <ScalarProperty Name="PUW_Id" ColumnName="PUW_Id" />
+                <ScalarProperty Name="PUS_Id" ColumnName="PUS_Id" />
+                <ScalarProperty Name="PUP_Id" ColumnName="PUP_Id" />
+                <ScalarProperty Name="PU_Id" ColumnName="PU_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

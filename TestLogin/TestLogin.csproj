@@ -32,8 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Eneter.Messaging.Framework, Version=8.0.4.0, Culture=neutral, PublicKeyToken=b85852a6d7b5cd07, processorArchitecture=MSIL">
+      <HintPath>..\packages\Eneter.Messaging.Framework.8.0.4\lib\net45\Eneter.Messaging.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,11 +54,249 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DowntimeEvents.cs" />
+    <Compile Include="Downtime_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Downtime_History_Synch_Help.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Downtime_Shift_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Errors_old.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fn_Local_SplitString_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Holiday.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="iFIX_Tag.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI_Calculation_Period.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI_Calculation_Type.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI_Calc_Type_Config.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI_PU_Current_Summary.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lang_Defaults_old.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lang_Text_old.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MachinesOverview.cs" />
+    <Compile Include="ModelOEE.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOEE.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOEE.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOEE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOEE.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Production_Unit.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Production_Unit_Type.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prod_Unit_KPI.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prod_Unit_KPI_CT.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prod_Unit_Shift.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prod_Unit_Tree.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prod_Unit_Tree_Config.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reason.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reason_Tree.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shift.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shift_Excluded_Interval_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shift_Excluded_Interval_Type.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shift_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ReportDowntimeOnCustomProdUnitAndCustomShift_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ReportDowntimeOnCustomProdUnit_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewChildCause_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewChildSiblingCause_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewDowntimeOnCustomProdUnitAndCustomShift_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewDowntimeOnCustomProdUnit_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewDowntimeOnSingleProdUnitAndCustomShift_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewDowntimeOnSingleProdUnitAndSingleShift_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewDowntimeOnSingleProdUnit_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewReasonTrees_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewShiftListOnCustomProdUnit_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewShiftListOnSingleProdUnit_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_Local_ViewSingleDowntimeConfig_Result.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StateEvent.cs" />
+    <Compile Include="TimedRequest.cs" />
+    <Compile Include="Tree_Cause_Config.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tree_Cause_Dependence.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tree_Level.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tree_Type.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users_Security.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Validation_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewDowntimeLevel.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewDowntimeReasonTree.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewKPI.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewKPIHistory.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProductionUnitTag.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProdUnitDowntTree.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProdUnitKPI.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProdUnitShift.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProdUnitShiftManagement.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewReason.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewReasonTree.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewShift.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewShiftOnProdUnit.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewTag.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WasteEvent.cs" />
+    <Compile Include="Waste_History.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Week_Day.cs">
+      <DependentUpon>ModelOEE.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="ModelOEE.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelOEE.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelOEE.edmx.diagram">
+      <DependentUpon>ModelOEE.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModelOEE.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelOEE.Context.cs</LastGenOutput>
+      <DependentUpon>ModelOEE.edmx</DependentUpon>
+    </Content>
+    <Content Include="ModelOEE.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelOEE.edmx</DependentUpon>
+      <LastGenOutput>ModelOEE.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
