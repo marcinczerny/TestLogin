@@ -35,11 +35,11 @@ namespace TestLogin
             //object mes = serializer.Serialize<MachinesOverview>(machinesOverview);
             //string message = (string)mes;
             //myReceiver.SendResponseMessage(e.ResponseReceiverId, message);
+
             
 
-
-                // Create TCP based messaging.
-                IMessagingSystemFactory aTcpMessaging = new TcpMessagingSystemFactory();
+            // Create TCP based messaging.
+            IMessagingSystemFactory aTcpMessaging = new TcpMessagingSystemFactory();
 
             // Use authenticated connection.
             IMessagingSystemFactory aMessaging =
@@ -204,7 +204,8 @@ namespace TestLogin
                     myReceiver.SendResponseMessage(e.ResponseReceiverId, "Finished");
                 }
             }
-            else if (timedRequest.Request.Equals("ChartMachines")) {
+            else if (timedRequest.Request.Equals("ChartMachines"))
+            {
                 //StateEvent stateEvent = new StateEvent();
                 //stateEvent.machines = new List<string>();
                 //stateEvent.machines.Add("Maszyna 1");
@@ -216,7 +217,7 @@ namespace TestLogin
 
                 using (LogstorOEEEntities db = new TestLogin.LogstorOEEEntities())
                 {
-                    var query = (from  pu in db.Production_Unit
+                    var query = (from pu in db.Production_Unit
                                  join a in db.Areas on pu.A_Id equals a.Id
                                  select new { Line = a.NamePL, LineNumber = a.Id, MachineName = pu.Name, MachineNumber = pu.Id }).ToList();
                     var machinesList = new List<MachinesOverview>();
@@ -241,6 +242,77 @@ namespace TestLogin
                         myReceiver.SendResponseMessage(e.ResponseReceiverId, message);
                     }
                     myReceiver.SendResponseMessage(e.ResponseReceiverId, "Finished");
+
+                }
+            }
+            else if (timedRequest.Request.Equals("ChartData"))
+            {
+                //StateEvent stateEvent = new StateEvent();
+                //stateEvent.machines = new List<string>();
+                //stateEvent.machines.Add("Maszyna 1");
+                //stateEvent.machines.Add("Maszyna 2");
+                //stateEvent.lineName = ("Linia 1");
+                //string message1 = (string)serializer.Serialize<StateEvent>(stateEvent);
+                //myReceiver.SendResponseMessage(e.ResponseReceiverId, message1);
+
+
+                using (LogstorOEEEntities db = new TestLogin.LogstorOEEEntities())
+                {
+                    try
+                    {
+                        DateTime end = DateTime.ParseExact(timedRequest.EndTime, "yyyy-M-dd H:m", System.Globalization.CultureInfo.InvariantCulture);
+                        DateTime start = DateTime.ParseExact(timedRequest.StartTime, "yyyy-M-dd H:m", System.Globalization.CultureInfo.InvariantCulture);
+                        var query = (from kh in db.KPI_History
+                                     join kh2 in db.KPI_History on new { kh.SH_Id, kh.PU_Id } equals new { kh2.SH_Id, kh2.PU_Id }
+                                     join kh3 in db.KPI_History on new { kh.SH_Id, kh.PU_Id } equals new { kh3.SH_Id, kh3.PU_Id }
+                                     join pukpi in db.Prod_Unit_KPI on kh.PUKPI_Id equals pukpi.Id
+                                     join kpi in db.KPIs on pukpi.KPI_Id equals kpi.Id
+                                     join pukpi2 in db.Prod_Unit_KPI on kh2.PUKPI_Id equals pukpi2.Id
+                                     join kpi2 in db.KPIs on pukpi2.KPI_Id equals kpi2.Id
+                                     join pukpi3 in db.Prod_Unit_KPI on kh3.PUKPI_Id equals pukpi3.Id
+                                     join kpi3 in db.KPIs on pukpi3.KPI_Id equals kpi3.Id
+                                     join sh in db.Shift_History on kh.SH_Id equals sh.Id
+                                     join pu in db.Production_Unit on kh.PU_Id equals pu.Id
+                                     join a in db.Areas on pu.A_Id equals a.Id
+                                     where pu.Name.Equals(timedRequest.MachineName) && a.NamePL.Equals(timedRequest.LineName) && sh.StartTime >= start
+                                        && sh.StartTime < end
+                                        && kpi.Name.Equals("Availability") && kpi2.Name.Equals("Performance") && kpi3.Name.Equals("Quality")
+                                     select new { LineNumber = a.Id, Timestamp = sh.StartTime, MachineNumber = pu.Id, Availibility = kh.Value, Performance = kh2.Value, Quality = kh3.Value }).ToList();
+                        var kPIevent = new KPIevent();
+                        kPIevent.timeStamp = "";
+                        kPIevent.performanceValue = "";
+                        kPIevent.qualityValue = "";
+                        kPIevent.oeeValue = "";
+                        kPIevent.availabilityValue = "";
+
+                        if (query.Count == 0)
+                        {
+                            myReceiver.SendResponseMessage(e.ResponseReceiverId, "Finished");
+                        }
+                        foreach (var row in query)
+                        {
+                            kPIevent.lineNumber = row.LineNumber;
+                            kPIevent.machineNumber = row.MachineNumber;
+                            kPIevent.timeStamp += row.Timestamp.ToString("yyyy-M-dd H:m") + ",";
+                            kPIevent.performanceValue += row.Performance.ToString() + ",";
+                            kPIevent.qualityValue += row.Quality.ToString() + ",";
+                            kPIevent.availabilityValue += row.Availibility.ToString() + ",";
+                            kPIevent.oeeValue += (row.Performance * row.Availibility * row.Quality / 10000).ToString() + ",";
+                        }
+
+                        kPIevent.timeStamp = kPIevent.timeStamp.Substring(0, kPIevent.timeStamp.Length - 1);
+                        kPIevent.performanceValue = kPIevent.performanceValue.Substring(0, kPIevent.performanceValue.Length - 1);
+                        kPIevent.qualityValue = kPIevent.qualityValue.Substring(0, kPIevent.qualityValue.Length - 1);
+                        kPIevent.availabilityValue = kPIevent.availabilityValue.Substring(0, kPIevent.availabilityValue.Length - 1);
+                        kPIevent.oeeValue = kPIevent.oeeValue.Substring(0, kPIevent.oeeValue.Length - 1);
+                        string message = (string)serializer.Serialize<KPIevent>(kPIevent);
+                        myReceiver.SendResponseMessage(e.ResponseReceiverId, message);
+                        //myReceiver.SendResponseMessage(e.ResponseReceiverId, null);
+                        myReceiver.SendResponseMessage(e.ResponseReceiverId, "Finished");
+                    }
+                    catch (Exception exc) {
+                        myReceiver.SendResponseMessage(e.ResponseReceiverId, "Finished");
+                    }
 
                 }
             }

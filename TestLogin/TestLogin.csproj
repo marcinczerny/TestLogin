@@ -85,6 +85,7 @@
     <Compile Include="KPI.cs">
       <DependentUpon>ModelOEE.tt</DependentUpon>
     </Compile>
+    <Compile Include="KPIevent.cs" />
     <Compile Include="KPI_Calculation_Period.cs">
       <DependentUpon>ModelOEE.tt</DependentUpon>
     </Compile>

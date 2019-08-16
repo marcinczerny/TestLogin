@@ -12,5 +12,6 @@ namespace TestLogin
         public String StartTime;
         public String EndTime;
         public String LineName;
+        public String MachineName;
     }
 }
