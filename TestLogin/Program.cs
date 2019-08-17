@@ -16,30 +16,43 @@ namespace TestLogin
         private static Dictionary<string, string> myUsers = new Dictionary<string, string>();
         private static IDuplexStringMessageReceiver myReceiver;
         public static MachinesOverview machinesOverview = new MachinesOverview();
+        private static IDuplexStringMessageReceiver myStringReceiver;
         static void Main(string[] args)
         {
-            //EneterTrace.TraceLog = new StreamWriter("d:/tracefile.txt");
+           
 
-            // Simulate database with users.
-            myUsers["John"] = "password1";
-            myUsers["Steve"] = "password2";
 
-            ////machinesOverview = new MachinesOverview();
-            //machinesOverview.Availibility = 80;
-            //machinesOverview.LineName = "Line 1";
-            //machinesOverview.MachineName = "1";
-            //machinesOverview.Performance = 70;
-            //machinesOverview.Quality = 90;
-            //machinesOverview.OEE = 80;
-            //ISerializer serializer = new XmlStringSerializer();
-            //object mes = serializer.Serialize<MachinesOverview>(machinesOverview);
-            //string message = (string)mes;
-            //myReceiver.SendResponseMessage(e.ResponseReceiverId, message);
 
-            
+            IMessagingSystemFactory messagingSystemFactoryTCP = new TcpMessagingSystemFactory();
+            DuplexStringMessagesFactory aReceiverFactory = new DuplexStringMessagesFactory();
+            myStringReceiver = aReceiverFactory.CreateDuplexStringMessageReceiver();
+            // Subscribe to get notified when a client connects, disconnects
+            // or sends a message.
 
-            // Create TCP based messaging.
+            myStringReceiver.RequestReceived += OnMessageReceived;
+            myStringReceiver.ResponseReceiverConnected += OnConnect;
+            IMessagingSystemFactory stringMessaging = new TcpMessagingSystemFactory()
+            {
+                // Set to receive messages in the main UI thread.
+                // Note: if this is not set then methods OnMessageReceived, OnClientConnected
+                //       and OnClientDisconnected would not be called from main UI thread
+                //       but from a listener thread.
+                MaxAmountOfConnections = 5
+            };
+
+            // Create input channel.
+            IDuplexInputChannel aInputChannel = stringMessaging.CreateDuplexInputChannel("tcp://192.168.1.5:8061/");
+
+            // Attach the input channel and be able to receive messages
+            // and send back response messages.
+            myStringReceiver.AttachDuplexInputChannel(aInputChannel);
+
+
+
             IMessagingSystemFactory aTcpMessaging = new TcpMessagingSystemFactory();
+
+
+
 
             // Use authenticated connection.
             IMessagingSystemFactory aMessaging =
@@ -63,6 +76,11 @@ namespace TestLogin
             // Detach input channel and stop listening.
             // Note: tis will release the listening thread.
             myReceiver.DetachDuplexInputChannel();
+        }
+
+        private static void OnConnect(object sender, ResponseReceiverEventArgs e)
+        {
+            Console.WriteLine("Połączono");
         }
 
         private static void OnRequestReceived(object sender, StringRequestReceivedEventArgs e)
@@ -425,6 +443,25 @@ namespace TestLogin
             Console.WriteLine("Authentication did not pass. The connection will be closed.");
             return false;
         }
+        private static void OnMessageReceived(object sender, StringRequestReceivedEventArgs e)
+        {
+            // Insert received message at the beginning of the listbox.
+            // Note: we can directly access the listbox because we set threading mode of
+            //       InputChannelThreading to the main UI thread.
+            using (LogstorOEEEntities db = new TestLogin.LogstorOEEEntities())
+            {
+                var query = (from pucs in db.KPI_PU_Current_Summary
+                             join KPI in db.KPIs on pucs.KPI_Id equals KPI.Id
+                             where pucs.KPI_Id == 1 && pucs.KPICP_Id == 1 && pucs.KPICT_Id == 1
+                             select new { Value = pucs.Value }).ToList();
+
+
+                float avg = query.Average(x => x.Value).Value;
+
+                myStringReceiver.SendResponseMessage(e.ResponseReceiverId, avg.ToString());
+            }
+
+        }
 
         private static byte[] ConvertHandshakeToBytes(string handshake) {
             
@@ -440,5 +477,9 @@ namespace TestLogin
             return result;
         }
     }
+
+
+
+    
 
 }
